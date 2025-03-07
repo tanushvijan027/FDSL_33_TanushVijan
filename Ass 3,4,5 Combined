@@ -1,0 +1,201 @@
+#include <stdio.h>
+struct bookinfo {
+    int id;
+    char title[20];
+    char author[20];
+    float price;
+};
+int n=0;
+void sortIDbubble(struct bookinfo b[], int n) {
+    int i, j;
+    struct bookinfo temp;
+    for (i = 0; i < n - 1; i++) {
+    for (j = 0; j < n - 1 - i; j++) {
+      if (b[j].id > b[j + 1].id) {
+             temp = b[j];
+             b[j] = b[j + 1];
+             b[j + 1] = temp;
+            }
+        }
+    }
+}
+
+void sortPricebubble(struct bookinfo b[], int n) {
+    int i, j;
+    struct bookinfo temp;
+    for (i = 0; i < n - 1; i++) {
+    for (j = 0; j < n - 1 - i; j++) {
+        if (b[j].price > b[j + 1].price) {
+             temp = b[j];
+             b[j] = b[j + 1];
+             b[j + 1] = temp;
+            }
+        }
+    }
+}
+void sortIDselection(struct bookinfo b[], int n) {
+    int i, j;
+    struct bookinfo temp;
+    for (i = 0; i < n - 1; i++) {
+    for (j = i; j < n - 1; j++) {
+      if (b[i].id > b[j + 1].id) {
+             temp = b[i];
+             b[i] = b[j + 1];
+             b[j + 1] = temp;
+            }
+        }
+    }
+}
+void sortPriceselection(struct bookinfo b[], int n) {
+    int i, j;
+    struct bookinfo temp;
+    for (i = 0; i < n - 1; i++) {
+    for (j = i; j < n - 1; j++) {
+        if (b[i].price > b[j + 1].price) {
+             temp = b[i];
+             b[i] = b[j + 1];
+             b[j + 1] = temp;
+            }
+        }
+    }
+}
+void sortIDinsertion(struct bookinfo b[], int n) {
+    int i, j,k;
+    struct bookinfo temp;
+    for(i=1;i<n;i++)
+     {
+       for(j=0;j<i;j++)
+       {
+          if(b[j].id>b[i].id)
+          {
+            temp=b[i];
+            for(k=i-1;k>=j;k--){
+            b[k+1]=b[k];
+            }
+            b[j]=temp;
+            break;
+      }
+       }     
+   }
+}
+void sortPriceinsertion(struct bookinfo b[], int n) {
+    int i, j,k;
+    struct bookinfo temp;
+    for(i=1;i<n;i++)
+     {
+       for(j=0;j<i;j++)
+       {
+          if(b[j].price>b[i].price)
+          {
+            temp=b[i];
+            for(k=i-1;k>=j;k--){
+            b[k+1]=b[k];
+            }
+            b[j]=temp;
+            break;
+      }
+       }     
+   }
+}
+
+void insertBook(struct bookinfo b[]) {
+    int a,i;
+    printf("Enter the number of books to insert:");
+    scanf("%d",&a);
+    
+    printf("\nEnter details of books:\n");
+    for(i=0;i<a;i++){
+    printf("Enter ID: ");
+    scanf("%d", &b[n].id);
+    printf("Enter Title: ");
+    scanf("%s", b[n].title);
+    printf("Enter Author: ");
+    scanf("%s", b[n].author);
+    printf("Enter Price: ");
+    scanf("%f", &b[n].price);
+    (n)++; 
+    }
+    printf("Book inserted successfully!\n");
+}
+
+void displayBooks(struct bookinfo b[], int n) {
+    if (n == 0) {
+        printf("No books available. Please insert books first.\n");
+        return;
+    }
+
+    printf("\nBook details are:\n");
+    for (int i = 0; i < n; i++) {
+        printf("%d)\n", i + 1);
+        printf("ID: %d\n", b[i].id);
+        printf("Title: %s\n", b[i].title);
+        printf("Author: %s\n", b[i].author);
+        printf("Price: %.1f\n", b[i].price);
+    }
+}
+
+int main() {
+    struct bookinfo b[20];
+    int choice;
+    int c;
+    int e;
+    do {
+        printf("\nMenu:\n");
+        printf("1. Insert a new book\n");
+        printf("2. Sort books by ID\n");
+        printf("3. Sort books by Price\n");
+        printf("4. Display all books\n");
+        printf("5. Exit\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+
+        switch (choice) {
+            case 1:
+                insertBook(b);
+                break;
+            case 2:
+                   printf("1. sort by bubble sort\n");
+                   printf("2. sort by Selection sort\n");
+                   printf("3. sort by insertion sort\n");
+                   printf("Enter your choice:");
+                   scanf("%d",&c);
+                   switch(c){
+                     case 1:sortIDbubble(b,n);
+                     break;
+                     case 2:sortIDselection(b,n);
+                       break;
+                     case 3:sortIDinsertion(b,n);
+                       break;
+                     default:printf("Wrong choice");
+                     }
+                    printf("Books sorted by ID.\n");
+                break;
+            case 3:
+                   printf("1. sort by bubble sort\n");
+                   printf("2. sort by Selection sort\n");
+                   printf("3. sort by insertion sort\n");
+                   printf("Enter your choice:");
+                   scanf("%d",&e);
+                   switch(e){
+                     case 1:sortPricebubble(b,n);
+                     break;
+                     case 2:sortPriceselection(b,n);
+                       break;
+                     case 3:sortPriceinsertion(b,n);
+                       break;
+                     default:printf("Wrong choice");
+                     }
+                    printf("Books sorted by Price.\n");
+                   break;
+            case 4:displayBooks(b, n);
+                break;
+            case 5:
+                printf("Exiting program...\n");
+                break;
+            default:
+                printf("Wrong choice! Please enter a valid option.\n");
+        }
+    } while (choice != 5);
+
+    return 0;
+}

@@ -1,0 +1,120 @@
+#include <stdio.h>
+#include <string.h>
+
+struct bookinfo {
+    int id;
+    char title[20];
+    char author[20];
+    float price;
+};
+int n = 0;
+
+void sortID(struct bookinfo b[], int n) {
+    int i, j, min_idx;
+    struct bookinfo temp;
+    for (i = 0; i < n - 1; i++) {
+        min_idx = i;
+        for (j = i + 1; j < n; j++) {
+            if (b[j].id < b[min_idx].id) {
+                min_idx = j;
+            }
+        }
+        // Swap
+        temp = b[i];
+        b[i] = b[min_idx];
+        b[min_idx] = temp;
+    }
+}
+
+void sortPrice(struct bookinfo b[], int n) {
+    int i, j, min_idx;
+    struct bookinfo temp;
+    for (i = 0; i < n - 1; i++) {
+        min_idx = i;
+        for (j = i + 1; j < n; j++) {
+            if (b[j].price < b[min_idx].price) {
+                min_idx = j;
+            }
+        }
+        // Swap
+        temp = b[i];
+        b[i] = b[min_idx];
+        b[min_idx] = temp;
+    }
+}
+
+void insertBook(struct bookinfo b[]) {
+    int a, i;
+    printf("Enter the number of books to insert: ");
+    scanf("%d", &a);
+    
+    printf("\nEnter details of books:\n");
+    for (i = 0; i < a; i++) {
+        printf("Enter ID: ");
+        scanf("%d", &b[n].id);
+        printf("Enter Title: ");
+        scanf("%s", b[n].title);
+        printf("Enter Author: ");
+        scanf("%s", b[n].author);
+        printf("Enter Price: ");
+        scanf("%f", &b[n].price);
+        n++; 
+    }
+    printf("Book(s) inserted successfully!\n");
+}
+
+void displayBooks(struct bookinfo b[], int n) {
+    if (n == 0) {
+        printf("No books available. Please insert books first.\n");
+        return;
+    }
+
+    printf("\nBook details are:\n");
+    for (int i = 0; i < n; i++) {
+        printf("%d)\n", i + 1);
+        printf("ID: %d\n", b[i].id);
+        printf("Title: %s\n", b[i].title);
+        printf("Author: %s\n", b[i].author);
+        printf("Price: %.1f\n", b[i].price);
+    }
+}
+
+int main() {
+    struct bookinfo b[20];
+    int ch; 
+
+    do {
+        printf("\nMenu:\n");
+        printf("1. Insert a new book\n");
+        printf("2. Sort books by ID\n");
+        printf("3. Sort books by Price\n");
+        printf("4. Display all books\n");
+        printf("5. Exit\n");
+        printf("Enter your choice: ");
+        scanf("%d", &ch);
+
+        switch (ch) {
+            case 1:
+                insertBook(b);
+                break;
+            case 2:
+                sortID(b, n);
+                printf("Books sorted by ID.\n");
+                break;
+            case 3:
+                sortPrice(b, n);
+                printf("Books sorted by Price.\n");
+                break;
+            case 4:
+                displayBooks(b, n);
+                break;
+            case 5:
+                printf("Exiting program...\n");
+                break;
+            default:
+                printf("Wrong choice! Please enter a valid option.\n");
+        }
+    } while (ch != 5);
+
+    return 0;
+}

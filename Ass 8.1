@@ -1,0 +1,70 @@
+#include<stdio.h>
+#define size 5
+int queue[size];
+int rear=-1;
+int front=-1;
+void enQueue()
+{
+	int element;
+	if(rear==size-1)
+	{
+		printf("Queue is full\n\n");
+	}
+	else
+	{
+		printf("Enter the element:");
+		scanf("%d",&element);
+		rear++;
+		queue[rear]=element;
+		printf("%d is inserted in queue\n\n",element);
+	}
+}
+void deQueue()
+{
+	if(front==rear)
+	{
+		printf("Queue is empty\n\n");
+	}
+	else
+	{
+		front++;
+		printf("%d is deleted from queue\n\n",queue[front]);
+	}
+}
+void display()
+{
+	printf("Elements in queue are:\n");
+	for(int i=front+1;i<=rear;i++)
+	{
+		printf("%d\t",queue[i]);
+	}
+	printf("\n\n");
+}
+int main()
+{
+	int ch;
+	do
+	{
+		printf("-----Welcome to Queue-----\n1.Insert Element\n2.Delete Element\n3.Display Queue\n4.Exit Queue\nEnter the operation to perform:");
+	scanf("%d",&ch);
+		switch(ch)
+		{
+			case 1:
+				enQueue();
+				break;
+			case 2:
+				deQueue();
+				break;
+			case 3:
+				display();
+				break;
+			case 4:
+				printf("Exiting queue....\n\n");
+				break;
+			default:
+				printf("Invalid Choice\n\n");			
+		}
+	}while(ch!=4);
+	return 0;		
+}
+

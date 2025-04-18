@@ -10,30 +10,30 @@ typedef struct {
 
 Song playlist[SIZE];
 int front = -1, rear = -1;
+int current = -1;
 
 void addSong() {
-    if ((rear + 1) % SIZE == front) 
-    {
+    if ((rear + 1) % SIZE == front) {
         printf("Playlist is full!\n\n");
         return;
     }
     
-    char songName[20];
-    char artistName[30];
+    char songName[20], artistName[30];
     printf("Enter song name: ");
-    scanf(" %[^\n]s", songName); 
+    scanf(" %[^\n]s", songName);
     printf("Enter artist name: ");
-    scanf(" %[^\n]s", artistName); 
+    scanf(" %[^\n]s", artistName);
 
     if (rear == -1 && front == -1) {
         rear = front = 0;
+        current = 0; 
     } else {
         rear = (rear + 1) % SIZE;
     }
     
     strcpy(playlist[rear].name, songName);
     strcpy(playlist[rear].artist, artistName);
-    printf("%s by %s added to the playlist.\n\n", songName,artistName);
+    printf("\"%s\" by %s added to the playlist.\n\n", songName, artistName);
 }
 
 void removeSong() {
@@ -42,12 +42,13 @@ void removeSong() {
         return;
     }
 
-    printf("%s by %s removed from the playlist.\n\n", playlist[front].name,playlist[front].artist);
+    printf("\"%s\" by %s removed from the playlist.\n\n", playlist[front].name, playlist[front].artist);
 
     if (rear == front) {
-        rear = front = -1;
+        rear = front = current = -1;
     } else {
         front = (front + 1) % SIZE;
+        current = front; // Update current song after deletion
     }
 }
 
@@ -60,18 +61,43 @@ void viewPlaylist() {
     printf("Current Playlist:\n");
     int i = front;
     while (1) {
-        printf("%d. %s by %s\n", i + 1, playlist[i].name,playlist[i].artist);
-        if (i == rear) 
-            break;
+        printf("%d. %s by %s\n", i + 1, playlist[i].name, playlist[i].artist);
+        if (i == rear) break;
         i = (i + 1) % SIZE;
     }
     printf("\n");
 }
 
+void playCurrent() {
+    if (current == -1) {
+        printf("No song is currently playing!\n\n");
+    } else {
+        printf("Now Playing: \"%s\" by %s\n\n", playlist[current].name, playlist[current].artist);
+    }
+}
+
+void nextSong() {
+    if (current == -1 || front == -1) {
+        printf("No next song available!\n\n");
+        return;
+    }
+
+    current = (current + 1) % SIZE;
+
+    if (current > rear) {
+        printf("Reached the end of the playlist!\n\n");
+        current = front; // Loop back to the first song
+    } else {
+        printf("Next Song: \"%s\" by %s\n\n", playlist[current].name, playlist[current].artist);
+    }
+}
+
 int main() {
     int choice;
     do {
-        printf("Music Playlist Menu:\n1. Add Song\n2. Remove Song\n3. View Playlist\n4. Exit\nEnter choice: ");
+        printf("Music Playlist Menu:\n");
+        printf("1. Add Song\n2. Remove Song\n3. View Playlist\n4. Play Current Song\n5. Next Song\n6. Exit\n");
+        printf("Enter choice: ");
         scanf("%d", &choice);
 
         switch (choice) {
@@ -85,12 +111,18 @@ int main() {
                 viewPlaylist();
                 break;
             case 4:
+                playCurrent();
+                break;
+            case 5:
+                nextSong();
+                break;
+            case 6:
                 printf("Exiting...\n\n");
                 break;
             default:
                 printf("Invalid choice!\n\n");
         }
-    } while (choice != 4);
+    } while (choice != 6);
 
     return 0;
 }

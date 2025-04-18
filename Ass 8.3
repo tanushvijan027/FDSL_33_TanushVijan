@@ -1,0 +1,96 @@
+#include <stdio.h>
+#include <string.h>
+
+#define SIZE 4
+
+typedef struct {
+    char name[20];
+    char artist[30];
+} Song;
+
+Song playlist[SIZE];
+int front = -1, rear = -1;
+
+void addSong() {
+    if ((rear + 1) % SIZE == front) 
+    {
+        printf("Playlist is full!\n\n");
+        return;
+    }
+    
+    char songName[20];
+    char artistName[30];
+    printf("Enter song name: ");
+    scanf(" %[^\n]s", songName); 
+    printf("Enter artist name: ");
+    scanf(" %[^\n]s", artistName); 
+
+    if (rear == -1 && front == -1) {
+        rear = front = 0;
+    } else {
+        rear = (rear + 1) % SIZE;
+    }
+    
+    strcpy(playlist[rear].name, songName);
+    strcpy(playlist[rear].artist, artistName);
+    printf("%s by %s added to the playlist.\n\n", songName,artistName);
+}
+
+void removeSong() {
+    if (front == -1 && rear == -1) {
+        printf("Playlist is empty!\n\n");
+        return;
+    }
+
+    printf("%s by %s removed from the playlist.\n\n", playlist[front].name,playlist[front].artist);
+
+    if (rear == front) {
+        rear = front = -1;
+    } else {
+        front = (front + 1) % SIZE;
+    }
+}
+
+void viewPlaylist() {
+    if (front == -1 && rear == -1) {
+        printf("Playlist is empty!\n\n");
+        return;
+    }
+
+    printf("Current Playlist:\n");
+    int i = front;
+    while (1) {
+        printf("%d. %s by %s\n", i + 1, playlist[i].name,playlist[i].artist);
+        if (i == rear) 
+            break;
+        i = (i + 1) % SIZE;
+    }
+    printf("\n");
+}
+
+int main() {
+    int choice;
+    do {
+        printf("Music Playlist Menu:\n1. Add Song\n2. Remove Song\n3. View Playlist\n4. Exit\nEnter choice: ");
+        scanf("%d", &choice);
+
+        switch (choice) {
+            case 1:
+                addSong();
+                break;
+            case 2:
+                removeSong();
+                break;
+            case 3:
+                viewPlaylist();
+                break;
+            case 4:
+                printf("Exiting...\n\n");
+                break;
+            default:
+                printf("Invalid choice!\n\n");
+        }
+    } while (choice != 4);
+
+    return 0;
+}

@@ -48,7 +48,7 @@ void removeSong() {
         rear = front = current = -1;
     } else {
         front = (front + 1) % SIZE;
-        current = front; // Update current song after deletion
+        current = front;
     }
 }
 
@@ -81,15 +81,16 @@ void nextSong() {
         printf("No next song available!\n\n");
         return;
     }
-
-    current = (current + 1) % SIZE;
-
-    if (current > rear) {
-        printf("Reached the end of the playlist!\n\n");
-        current = front; // Loop back to the first song
-    } else {
-        printf("Next Song: \"%s\" by %s\n\n", playlist[current].name, playlist[current].artist);
+    if (front == rear) {
+        printf("You are at the only song in the playlist: \"%s\" by %s\n\n", playlist[current].name, playlist[current].artist);
+        return;
     }
+    current = (current + 1) % SIZE;
+    if (current == front) {
+        printf("Reached the end of the playlist! Wrapping around...\n\n");
+    }
+
+    printf("Next Song: \"%s\" by %s\n\n", playlist[current].name, playlist[current].artist);
 }
 
 int main() {

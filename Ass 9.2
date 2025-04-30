@@ -17,7 +17,7 @@ void addSong() {
         printf("Playlist is full!\n\n");
         return;
     }
-    
+
     char songName[20], artistName[30];
     printf("Enter song name: ");
     scanf(" %[^\n]s", songName);
@@ -25,12 +25,11 @@ void addSong() {
     scanf(" %[^\n]s", artistName);
 
     if (rear == -1 && front == -1) {
-        rear = front = 0;
-        current = 0; 
+        rear = front = current = 0;
     } else {
         rear = (rear + 1) % SIZE;
     }
-    
+
     strcpy(playlist[rear].name, songName);
     strcpy(playlist[rear].artist, artistName);
     printf("\"%s\" by %s added to the playlist.\n\n", songName, artistName);
@@ -81,13 +80,12 @@ void nextSong() {
         printf("No next song available!\n\n");
         return;
     }
-    if (front == rear) {
-        printf("You are at the only song in the playlist: \"%s\" by %s\n\n", playlist[current].name, playlist[current].artist);
-        return;
-    }
-    current = (current + 1) % SIZE;
-    if (current == front) {
+
+    if (current == rear) {
+        current = front;
         printf("Reached the end of the playlist! Wrapping around...\n\n");
+    } else {
+        current = (current + 1) % SIZE;
     }
 
     printf("Next Song: \"%s\" by %s\n\n", playlist[current].name, playlist[current].artist);

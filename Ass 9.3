@@ -1,0 +1,98 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define SIZE 5
+
+typedef struct {
+    int vehicles[SIZE];
+    int front;
+    int rear;
+} CircularQueue;
+
+void initialize(CircularQueue *q) {
+    q->front = -1;
+    q->rear = -1;
+}
+
+int isFull(CircularQueue *q) {
+    return (q->front == (q->rear + 1) % SIZE);
+}
+
+int isEmpty(CircularQueue *q) {
+    return (q->front == -1);
+}
+
+void enqueue(CircularQueue *q, int val) {
+    if (isFull(q)) {
+        printf("Queue Full\n");
+        return;
+    }
+    if (isEmpty(q)) q->front = 0;
+    q->rear = (q->rear + 1) % SIZE;
+    q->vehicles[q->rear] = val;
+    printf("Vehicle %d added\n", val);
+}
+
+int dequeue(CircularQueue *q) {
+    if (isEmpty(q)) {
+        printf("Queue Empty\n");
+        return -1;
+    }
+    int val = q->vehicles[q->front];
+    if (q->front == q->rear)
+        q->front = q->rear = -1;
+    else
+        q->front = (q->front + 1) % SIZE;
+    return val;
+}
+
+void display(CircularQueue *q) {
+    if (isEmpty(q)) {
+        printf("Queue Empty\n");
+        return;
+    }
+    int i = q->front;
+    printf("Queue: ");
+    while (1) {
+        printf("%d ", q->vehicles[i]);
+        if (i == q->rear) break;
+        i = (i + 1) % SIZE;
+    }
+    printf("\n");
+}
+
+int main() {
+    CircularQueue q;
+    initialize(&q);
+    int choice, val, count;
+    printf("*****Welcome to Traffic Management system*****");
+
+    while (1) {
+        printf("\n1. Add Vehicle\n2. Pass Vehicles\n3. Show Queue\n4. Exit\nChoice: ");
+        scanf("%d", &choice);
+        if (choice == 1) {
+            printf("Enter vehicle number: ");
+            scanf("%d", &val);
+            enqueue(&q, val);
+        } else if (choice == 2) {
+            printf("How many vehicles to pass: ");
+            scanf("%d", &count);
+            for (int i = 0; i < count; i++) {
+                int passed = dequeue(&q);
+                if (passed != -1)
+                    printf("Vehicle %d passed\n", passed);
+                else
+                    break;
+            }
+        } else if (choice == 3) {
+            display(&q);
+        } else if (choice == 4) {
+            printf("Exiting...\n");
+            break;
+        } else {
+            printf("Invalid\n");
+        }
+    }
+
+    return 0;
+}

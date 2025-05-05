@@ -26,7 +26,7 @@ void insertAtFirst()
         newnode->next = temp;
         temp->prev = newnode;
     }
-    printf("Node inserted at first\n2");
+    printf("Node inserted at first\n\n");
 }
 void insertAtLast()
 {
@@ -50,7 +50,7 @@ void insertAtLast()
         newnode->prev = temp;
         newnode->next = NULL;
     }
-    printf("Node inserted at last\n");
+    printf("Node inserted at last\n\n");
 }
 void insertAtPosition()
 {
@@ -68,7 +68,7 @@ void insertAtPosition()
     }    
     else if(head == NULL && pos != 1)
     {
-        printf("Invalid position\n");
+        printf("Invalid position\n\n");
         return;
     }
     else if(pos == 1)
@@ -89,7 +89,7 @@ void insertAtPosition()
         }
         if(temp == NULL)
         {
-            printf("Invalid position\n");
+            printf("Invalid position\n\n");
             return;
         }
         newnode->next = temp->next;
@@ -98,13 +98,13 @@ void insertAtPosition()
         temp->next = newnode;
         newnode->prev = temp;        
     }
-    printf("Node inserted at position %d\n",pos);
+    printf("Node inserted at position %d\n\n",pos);
 }
 void deleteAtFirst()
 {
     if(head == NULL)
     {
-        printf("List is empty\n");
+        printf("List is empty\n\n");
         return;
     }
     temp = head;
@@ -112,13 +112,13 @@ void deleteAtFirst()
     if(head != NULL)    
         head->prev = NULL;
     free(temp);
-    printf("Node deleted at first\n");
+    printf("Node deleted at first\n\n");
 }
 void deleteAtLast()
 {
     if(head == NULL)
     {
-        printf("List is empty\n");
+        printf("List is empty\n\n");
         return;
     }
     temp = head;
@@ -131,7 +131,7 @@ void deleteAtLast()
     else
         head = NULL;
     free(temp);
-    printf("Node deleted at last\n");
+    printf("Node deleted at last\n\n");
 }
 void deleteAtPosition()
 {
@@ -140,7 +140,7 @@ void deleteAtPosition()
     scanf("%d",&pos);
     if(head == NULL)
     {
-        printf("List is empty\n");
+        printf("List is empty\n\n");
         return;
     }
     if(pos == 1)
@@ -161,7 +161,7 @@ void deleteAtPosition()
         }
         if(temp == NULL)
         {
-            printf("Invalid position\n");
+            printf("Invalid position\n\n");
             return;
         }
         if(temp->prev != NULL)
@@ -170,13 +170,13 @@ void deleteAtPosition()
             temp->next->prev = temp->prev;
         free(temp);        
     }
-    printf("Node deleted at position %d\n",pos);
+    printf("Node deleted at position %d\n\n",pos);
 }
 void display()
 {
     if(head == NULL)
     {
-        printf("List is empty\n");
+        printf("List is empty\n\n");
         return;
     }
     temp = head;
@@ -186,13 +186,13 @@ void display()
         printf("%d ",temp->data);
         temp = temp->next;
     }
-    printf("\n");
+    printf("\n\n");
 }
 void reverseDisplay()
 {
     if(head == NULL)
     {
-        printf("List is empty\n");
+        printf("List is empty\n\n");
         return;
     }
     temp = head;
@@ -206,7 +206,7 @@ void reverseDisplay()
         printf("%d ",temp->data);
         temp = temp->prev;
     }
-    printf("\n");
+    printf("\n\n");
 }
 int main()
 {
@@ -227,8 +227,8 @@ int main()
             case 6: deleteAtPosition(); break;
             case 7: display(); break;
             case 8: reverseDisplay(); break;
-            case 9: printf("Exiting..."); break;
-            default: printf("Invalid choice\n"); break;
+            case 9: printf("Exiting...\n\n"); break;
+            default: printf("Invalid choice\n\n"); break;
         }
     }
     return 0;

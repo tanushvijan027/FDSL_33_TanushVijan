@@ -1,1 +1,1 @@
-# FDSL_33_TanushVijan
+This repository contains all my assignments for the Fundamentals of Data Structure course. It serves as an organized collection of my work, demonstrating my understanding and implementation of various data structures and algorithm using C language.It consist of programs based on topics like arrays,stacks,queues and linnked lists.It also consists of various searching and sorting algorithms.
